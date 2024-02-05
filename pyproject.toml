@@ -1,0 +1,2 @@
+[build-system]
+requires = ["git-versiointi>=1.6rc4", "setuptools>=42", "wheel"]

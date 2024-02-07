@@ -16,7 +16,6 @@ setup(
   install_requires=['celery-viestikanava', 'django-pistoke', 'websockets'],
   entry_points={
     'django.sovellus': ['sivuvahti = sivuvahti'],
-    'django.osoitteisto': ['sivuvahti = sivuvahti'],
   },
   zip_safe=False,
 )

@@ -13,7 +13,7 @@ setup(
   packages=find_packages(exclude=['testit']),
   include_package_data=True,
   python_requires='>=3.8',
-  install_requires=['celery', 'django-pistoke', 'websockets'],
+  install_requires=['celery-viestikanava', 'django-pistoke', 'websockets'],
   entry_points={
     'django.sovellus': ['sivuvahti = sivuvahti'],
     'django.osoitteisto': ['sivuvahti = sivuvahti'],

@@ -56,25 +56,20 @@ class Sivuvahti(WebsocketNakyma):
       kanava='sivuvahti',
       alikanava=request.GET['sivu'],
     ) as kanava:
-      await kanava.kirjoita(**itse)
+      await kanava.kirjoita(itse)
       try:
-        while True:
-          viesti = await kanava.lue()
+        async for viesti in kanava:
           saapuva_uuid = viesti['uuid']
           if saapuva_uuid == itse['uuid']:
             pass
           elif viesti.get('tila') == 'poistuu':
-            try:
-              kayttaja = muut.pop(saapuva_uuid)
-            except KeyError:
-              pass
-            else:
+            if kayttaja := muut.pop(saapuva_uuid, None):
               await request.send({'poistuva_kayttaja': kayttaja})
           elif saapuva_uuid not in muut:
             kayttaja = muut[saapuva_uuid] = viesti['kayttaja']
             await request.send({'saapuva_kayttaja': kayttaja})
             # Ilmoittaudutaan uudelle saapujalle.
-            await kanava.kirjoita(**itse)
+            await kanava.kirjoita(itse)
             # elif saapuva_uuid not in muut
           # while True
         # try

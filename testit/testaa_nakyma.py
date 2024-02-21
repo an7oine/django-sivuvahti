@@ -21,8 +21,8 @@ from viestikanava import Viestikanava
 urlpatterns = [
   path('oletusarvot', Sivuvahti.as_view(), name='oletusarvot'),
   path('mukautettu', Sivuvahti.as_view(
-    kayttajan_tiedot=lambda kayttaja: {
-      'kokonimi': f'Tohtori {kayttaja.username.capitalize()}'
+    kayttajan_tiedot=lambda request: {
+      'kokonimi': f'Tohtori {request.user.username.capitalize()}'
     }
   ), name='mukautettu'),
 ]

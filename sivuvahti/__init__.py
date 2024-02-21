@@ -11,10 +11,10 @@ from pistoke.tyokalut import CsrfKattely, JsonLiikenne
 from viestikanava import Viestikanava
 
 
-def _kayttajan_oletustiedot(kayttaja):
+def _kayttajan_oletustiedot(request):
   return {
-    'id': kayttaja.pk,
-    'nimi': str(kayttaja),
+    'id': request.user.pk,
+    'nimi': str(request.user),
   }
   # def _kayttajan_oletustiedot
 
@@ -29,9 +29,9 @@ class Sivuvahti(WebsocketNakyma):
   >>> from sivuvahti import Sivuvahti
   >>> urlpatterns = [
   ...    path('sivuvahti', Sivuvahti.as_view(
-  ...      kayttajan_tiedot=lambda kayttaja: {
-  ...        'id': kayttaja.pk,
-  ...        'nimi': kayttaja.first_name,
+  ...      kayttajan_tiedot=lambda request: {
+  ...        'id': request.user.pk,
+  ...        'nimi': request.user.first_name,
   ...      }
   ...    ), name='sivuvahti'),
   ... ]
@@ -48,7 +48,7 @@ class Sivuvahti(WebsocketNakyma):
 
     itse = {
       'uuid': str(uuid.uuid4()),
-      'kayttaja': self.kayttajan_tiedot(request.user),
+      'kayttaja': self.kayttajan_tiedot(request),
     }
     muut = {}
 
